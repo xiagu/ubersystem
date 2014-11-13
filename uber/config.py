@@ -7,6 +7,17 @@ from uber.common import *
 # All global constants defined and exported here are also passed to our templates.
 _config = parse_config(__file__)
 
+# FIXME this should be a real constant read from config
+redis_config_key = 'dev'
+# FIXME this should be a real connection string read from config
+#redis_pool = ConnectionPool(host=os.environ['REDIS_HOST'], port=int(os.environ['REDIS_PORT']), db=int(os.environ['REDIS_DB']))
+redis_pool = ConnectionPool(host='127.0.0.1', port=6379, db=0)
+redis = StrictRedis(connection_pool=redis_pool)
+c = Dict(redis=redis, key=redis_config_key)
+c['foo'] = 'test'
+foo = pprint.pprint(c)
+print(foo)
+
 class State:
     """
     We use global constants for all of our configurable global state.  This works really well for things
@@ -63,7 +74,7 @@ class State:
     @property
     def SUPPORTER_BADGE_PRICE(self):
         return self.BADGE_PRICE + SUPPORTER_LEVEL
-        
+
     @property
     def SEASON_BADGE_PRICE(self):
         return self.BADGE_PRICE + SEASON_LEVEL
@@ -118,7 +129,7 @@ class State:
         else:
             raise AttributeError('no such attribute {}'.format(name))
 
-state = State()    
+state = State()
 
 def _unrepr(d):
     for opt in d:
