@@ -20,9 +20,9 @@ def load_redis_defaults():
     colorama.init()
     for key, value in defaults.items():
         current_value = c.get(key)
-        if current_value == 'None':
-            print(Back.RED + Fore.WHITE + '[new]' +
-                  Back.BLACK + Fore.RED + ' [' + str(type(value)) + '] ' +
+        if current_value == None:
+            print(Back.YELLOW + Fore.WHITE + '[new]' +
+                  Back.BLACK + Fore.YELLOW + ' [' + str(type(value)) + '] ' +
                   key.decode("utf-8") + ' ==> ' + str(value) +
                   Style.RESET_ALL
                   )
@@ -35,12 +35,12 @@ def load_redis_defaults():
                   )
             pass
         else:
-            print(Back.YELLOW + Fore.WHITE + '[chg]' +
-                  Back.BLACK + Fore.YELLOW + ' [' + str(type(value)) + '] ' +
-                  key.decode("utf-8") + ' ==> ' + str(value) +
-                  Style.RESET_ALL
+            print(Back.RED + Fore.WHITE + '[chg]' +
+                  Back.BLACK + Fore.RED + ' [' + str(type(value)) + '] ' +
+                  key.decode("utf-8") + ' ==> ' + str(current_value) + ' ' +
+                  Back.RED + Fore.WHITE + '(not changed to: ' + str(value) +
+                  ')' + Style.RESET_ALL
                   )
-            c[key] = value
 
 @entry_point
 def print_redis_config():
