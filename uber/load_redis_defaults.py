@@ -22,14 +22,14 @@ def load_redis_defaults():
         current_value = c.get(key)
         if current_value == None:
             print(Back.YELLOW + Fore.WHITE + '[new]' +
-                  Back.BLACK + Fore.YELLOW + ' [' + str(type(value)) + '] ' +
+                  Back.BLACK + Fore.YELLOW +
                   key.decode("utf-8") + ' ==> ' + str(value) +
                   Style.RESET_ALL
                   )
             c[key] = value
         elif current_value == value:
             print(Back.GREEN + Fore.WHITE + '[eql]' +
-                  Back.BLACK + Fore.GREEN + ' [' + str(type(value)) + '] ' +
+                  Back.BLACK + Fore.GREEN +
                   key.decode("utf-8") + ' ==> ' + str(value) +
                   Style.RESET_ALL
                   )
@@ -37,7 +37,7 @@ def load_redis_defaults():
         else:
             print(Back.RED + Fore.WHITE + '[chg]' +
                   Back.BLACK + Fore.RED + ' [' + str(type(value)) + '] ' +
-                  key.decode("utf-8") + ' ==> ' + str(current_value) + ' ' +
+                  key.decode("utf-8") + ' ==> ' +
                   Back.RED + Fore.WHITE + '(not changed to: ' + str(value) +
                   ')' + Style.RESET_ALL
                   )
