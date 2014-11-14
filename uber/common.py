@@ -80,6 +80,7 @@ from uber.server import *
 from uber import reset_db
 from uber import config_db
 from uber.tests import import_test_data
+from uber import load_redis_defaults
 
 import stripe
 stripe.api_key = STRIPE_SECRET_KEY
