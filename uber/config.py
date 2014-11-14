@@ -14,10 +14,6 @@ redis_config_key = 'dev'
 redis_pool = ConnectionPool(host='127.0.0.1', port=6379, db=0)
 redis = StrictRedis(connection_pool=redis_pool)
 c = Dict(redis=redis, key=redis_config_key)
-#c['foo'] = 'test'
-foo = pprint.pprint(c)
-print(foo)
-print(c.get('foo'))
 
 class State:
     """

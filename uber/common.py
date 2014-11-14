@@ -37,6 +37,8 @@ from redis import ConnectionPool, StrictRedis
 from redis_collections import Dict, List
 import pprint
 import pickle
+import colorama
+from colorama import Fore, Back, Style
 
 import pytz
 import bcrypt
