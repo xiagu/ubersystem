@@ -1,19 +1,13 @@
 from uber.common import *
 
-# Any configurable property defined in our configuration is automatically converted into a global constant,
-# so outside of this file, we should never need to access this dictionary directly.  So we should prefer
-# using the DONATIONS_ENABLED global constant instead of saying _config['donations_enabled'], etc.  See
-# the comments in configspec.ini for explanations of the particilar options, which are documented there.
-# All global constants defined and exported here are also passed to our templates.
-_config = parse_config(__file__)
-
 # FIXME this should be a real constant read from config
 redis_config_key = 'dev'
 # FIXME this should be a real connection string read from config
 #redis_pool = ConnectionPool(host=os.environ['REDIS_HOST'], port=int(os.environ['REDIS_PORT']), db=int(os.environ['REDIS_DB']))
 redis_pool = ConnectionPool(host='127.0.0.1', port=6379, db=0)
 redis = StrictRedis(connection_pool=redis_pool)
-c = Dict(redis=redis, key=redis_config_key)
+C_LEGACY = RedisDict(redis=redis, key=redis_config_key)
+_config = C_LEGACY
 
 class State:
     """

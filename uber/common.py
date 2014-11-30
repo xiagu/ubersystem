@@ -33,8 +33,8 @@ from collections import defaultdict, OrderedDict
 from os.path import abspath, dirname, exists, join
 from datetime import date, time, datetime, timedelta
 from threading import Thread, RLock, local, current_thread
+from durabledict import RedisDict
 from redis import ConnectionPool, StrictRedis
-from redis_collections import Dict, List
 import pprint
 import pickle
 import colorama
