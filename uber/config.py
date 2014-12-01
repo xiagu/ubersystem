@@ -1,13 +1,14 @@
 from uber.common import *
 
+_config = parse_config(__file__)
+
 # FIXME this should be a real constant read from config
 redis_config_key = 'dev'
 # FIXME this should be a real connection string read from config
 #redis_pool = ConnectionPool(host=os.environ['REDIS_HOST'], port=int(os.environ['REDIS_PORT']), db=int(os.environ['REDIS_DB']))
 redis_pool = ConnectionPool(host='127.0.0.1', port=6379, db=0)
 redis = StrictRedis(connection_pool=redis_pool)
-C_LEGACY = RedisDict(redis=redis, key=redis_config_key)
-_config = C_LEGACY
+C_LEGACY = RedisDict(redis_config_key, Redis(), autosync=False)
 
 class State:
     """
