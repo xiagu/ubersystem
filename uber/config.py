@@ -1,14 +1,14 @@
 from uber.common import *
 
-_config = parse_config(__file__)
-
 # FIXME this should be a real constant read from config
 redis_config_key = 'dev'
 # FIXME this should be a real connection string read from config
 #redis_pool = ConnectionPool(host=os.environ['REDIS_HOST'], port=int(os.environ['REDIS_PORT']), db=int(os.environ['REDIS_DB']))
 redis_pool = ConnectionPool(host='127.0.0.1', port=6379, db=0)
 redis = StrictRedis(connection_pool=redis_pool)
-C_LEGACY = RedisDict(redis_config_key, Redis(), autosync=False)
+# FIXME this should be autosync=False for better performance, and sync before every page load or background process execution
+C_LEGACY = RedisDict(redis_config_key, Redis(), autosync=True)
+_config = C_LEGACY
 
 class State:
     """
@@ -133,21 +133,27 @@ def _unrepr(d):
         elif isinstance(d[opt], dict):
             _unrepr(d[opt])
 
-_unrepr(_config['appconf'])
-APPCONF = _config['appconf'].dict()
+_unrepr(_config[b'appconf'])
+APPCONF = _config[b'appconf'].dict()
 
-django.conf.settings.configure(**_config['django'].dict())
+django.conf.settings.configure(**_config[b'django'].dict())
 
-BADGE_PRICES = _config['badge_prices']
+BADGE_PRICES = _config[b'badge_prices']
 for _opt, _val in chain(_config.items(), BADGE_PRICES.items()):
+    #FIXME there has got to be a better way to do this
+    try:
+        _myopt = _opt.decode("UTF-8")
+    except AttributeError:
+        _myopt = _opt
+    #print(_opt, " > ", _myopt, " / ", _val)
     if not isinstance(_val, dict):
-        globals()[_opt.upper()] = _val
+        globals()[_myopt.upper()] = _val
 
 DATES = {}
 TIMESTAMP_FORMAT = '%Y-%m-%d %H:%M:%S'
 DATE_FORMAT = '%Y-%m-%d'
 EVENT_TIMEZONE = pytz.timezone(EVENT_TIMEZONE)
-for _opt, _val in _config['dates'].items():
+for _opt, _val in _config[b'dates'].items():
     if not _val:
         _dt = None
     elif ' ' in _val:
@@ -186,14 +192,13 @@ def _is_intstr(s):
         return s[1:].isdigit()
     return s.isdigit()
 
-for _name, _section in _config['enums'].items():
+for _name, _section in _config[b'enums'].items():
     _make_enum(_name, _section)
 
-for _name, _val in _config['integer_enums'].items():
+for _name, _val in _config[b'integer_enums'].items():
     if isinstance(_val, int):
         globals()[_name.upper()] = _val
-
-for _name, _section in _config['integer_enums'].items():
+for _name, _section in _config[b'integer_enums'].items():
     if isinstance(_section, dict):
         _interpolated = OrderedDict()
         for _desc, _val in _section.items():
@@ -207,15 +212,15 @@ for _name, _section in _config['integer_enums'].items():
         _make_enum(_name, _interpolated, prices=_name.endswith('_price'))
 
 BADGE_RANGES = {}
-for _badge_type, _range in _config['badge_ranges'].items():
+for _badge_type, _range in _config[b'badge_ranges'].items():
     BADGE_RANGES[globals()[_badge_type.upper()]] = _range
 
 SHIFTLESS_DEPTS = {globals()[dept.upper()] for dept in SHIFTLESS_DEPTS}
 PREASSIGNED_BADGE_TYPES = [globals()[badge_type.upper()] for badge_type in PREASSIGNED_BADGE_TYPES]
 TRANSFERABLE_BADGE_TYPES = [globals()[badge_type.upper()] for badge_type in TRANSFERABLE_BADGE_TYPES]
 
-SEASON_EVENTS = _config['season_events']
-DEPT_HEAD_CHECKLIST = _config['dept_head_checklist']
+SEASON_EVENTS = _config[b'season_events']
+DEPT_HEAD_CHECKLIST = _config[b'dept_head_checklist']
 
 BADGE_LOCK = RLock()
 
