@@ -7,8 +7,8 @@ redis_config_key = 'dev'
 redis_pool = ConnectionPool(host='127.0.0.1', port=6379, db=0)
 redis = StrictRedis(connection_pool=redis_pool)
 # FIXME this should be autosync=False for better performance, and sync before every page load or background process execution
-C_LEGACY = RedisDict(redis_config_key, Redis(), autosync=True)
-_config = C_LEGACY
+c_legacy = RedisDict(redis_config_key, Redis(), autosync=True)
+_config = c_legacy
 
 class State:
     """
