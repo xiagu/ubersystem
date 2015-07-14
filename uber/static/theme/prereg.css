@@ -54,7 +54,8 @@ body {
 }
 
 .optional-field,
-.optional-field ~ div {
+.optional-field ~ div,
+#collect_age {
     display: none;
 }
 

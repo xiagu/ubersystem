@@ -180,7 +180,7 @@
     </div>
 </div>
 
-<div class="form-group">
+<div class="form-group" id="collect_age">
     {% if c.COLLECT_EXACT_BIRTHDATE %}
         <label for="birthdate" class="col-sm-2 control-label">Date of Birth</label>
         <div class="col-sm-6">
@@ -190,7 +190,7 @@
         <label for="age_group" class="col-sm-2 control-label">Age as of {{ c.EVENT_NAME }}</label>
         <div class="col-sm-6">
             <select name="age_group" class="form-control" onChange="ageGroupSelected()">
-                <option value="{{ c.AGE_UNKNOWN }}">Please indicate your age</option>
+                <option value="{{ c.OVER_21 }}">Please indicate your age</option>
                 {% options c.PREREG_AGE_GROUP_OPTS attendee.age_group %}
             </select>
         </div>
