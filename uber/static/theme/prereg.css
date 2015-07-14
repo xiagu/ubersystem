@@ -51,6 +51,7 @@ body {
 
 .optional-field {
     font-weight: normal;
+    display: none;
 }
 
 .heading-label {
