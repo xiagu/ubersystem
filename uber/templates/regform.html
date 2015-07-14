@@ -5,8 +5,9 @@
         {% if not c.COLLECT_EXACT_BIRTHDATE %}
             setVisible('#age_disclaimer', AGE_GROUPS[$.val('age_group')].consent_form);
             if (!$.field('badge_type') || $.val('badge_type') !== {{ c.PSEUDO_DEALER_BADGE }}) {
-                setVisible('.staffing', AGE_GROUPS[$.val('age_group')].can_volunteer);
-                staffingClicked();
+                // Don't show anything, we're being secretive
+                // setVisible('.staffing', AGE_GROUPS[$.val('age_group')].can_volunteer);
+                // staffingClicked();
             }
         {% endif %}
     };
@@ -19,7 +20,7 @@
         $('#cellphone').parents('.form-group').find('label:first').css('font-weight', checked ? 'bold' : 'normal');
     };
     $(function () {
-        staffingClicked();
+        // staffingClicked();
         if ($.field('staffing')) {
             $.field('staffing').on('click', staffingClicked);
         }
@@ -29,7 +30,7 @@
         setVisible($.field('cellphone'), $.field('no_cellphone').is(':not(:checked)'));
     };
     $(function () {
-        noCellphoneClicked();
+        // noCellphoneClicked();
         $.field('no_cellphone').on('click', noCellphoneClicked);
     });
 </script>
