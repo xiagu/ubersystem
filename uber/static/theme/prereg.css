@@ -51,6 +51,10 @@ body {
 
 .optional-field {
     font-weight: normal;
+}
+
+.optional-field,
+.optional-field ~ div {
     display: none;
 }
 
