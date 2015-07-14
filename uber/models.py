@@ -1019,7 +1019,7 @@ class Attendee(MagModel, TakesPaymentMixin):
 
     badge_printed_name = Column(UnicodeText)
 
-    staffing         = Column(Boolean, default=False)
+    staffing         = Column(Boolean, default=True)
     fire_safety_cert = Column(UnicodeText)
     requested_depts  = Column(MultiChoice(c.JOB_INTEREST_OPTS))
     assigned_depts   = Column(MultiChoice(c.JOB_LOCATION_OPTS), admin_only=True)

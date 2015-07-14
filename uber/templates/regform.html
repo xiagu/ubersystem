@@ -164,7 +164,7 @@
     </div>
 </div>
 
-<div class="form-group staffing">
+<div class="form-group staffing" style="display:none">
     <label for="staffing" class="col-sm-2 control-label">Want to Volunteer?</label>
     <div class="col-sm-6">
         {% checkbox attendee.staffing %} Sign me up! &nbsp;
@@ -172,7 +172,7 @@
     </div>
 </div>
 
-<div class="form-group staffing" id="departments">
+<div class="form-group staffing" id="departments" style="display:none">
     <label for="requested_depts" class="col-sm-2 control-label">Where do you want to help?</label>
     <div class="col-sm-6">
         {% checkgroup attendee.requested_depts %}
